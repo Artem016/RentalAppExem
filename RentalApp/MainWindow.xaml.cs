@@ -27,5 +27,34 @@ namespace RentalApp
             DbContext db = new DbContext();
             ClientsGrid.ItemsSource = db.GetClints().DefaultView;
         }
+
+        private void AddClient_Click(object sender, RoutedEventArgs e)
+        {
+            string lastName = LastNameBox.Text;
+            string firstName = FirstNameBox.Text;
+            string middleName = MiddleNameBox.Text;
+            string passportSeries = PassportSeriesBox.Text;
+            string passportNumber = PassportNumberBox.Text;
+            string address = AddressBox.Text;
+
+            if (string.IsNullOrWhiteSpace(lastName) || string.IsNullOrWhiteSpace(firstName))
+            {
+                MessageBox.Show("Введите как минимум имя и фамилию!");
+                return;
+            }
+
+            DbContext db = new DbContext();
+            db.AddClint(lastName, firstName, middleName, passportSeries, passportNumber, address);
+
+            MessageBox.Show("Клиент добавлен");
+            ClientsGrid.ItemsSource = db.GetClints().DefaultView;
+
+            LastNameBox.Clear();
+            FirstNameBox.Clear();
+            MiddleNameBox.Clear();
+            PassportSeriesBox.Clear();
+            PassportNumberBox.Clear();
+            AddressBox.Clear();
+        }
     }
 }

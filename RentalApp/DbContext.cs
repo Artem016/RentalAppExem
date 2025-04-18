@@ -21,5 +21,26 @@ namespace RentalApp
 
             return table;
         }
+
+        public void AddClint(string lastName, string firstName, string middleName, string passportSeries, string passportNumber, string address)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(
+                    "insert into Clients (LastName, FirstName, MiddleName, PassportSeries, PassportNumber, Address) " +
+                    "values (@LastName, @FirstName, @MiddleName, @PassportSeries, @PassportNumber, @Address)", connection);
+
+                command.Parameters.AddWithValue("@LastName", lastName);
+                command.Parameters.AddWithValue("@FirstName", firstName);
+                command.Parameters.AddWithValue("@MiddleName", middleName);
+                command.Parameters.AddWithValue("@PassportSeries", passportSeries);
+                command.Parameters.AddWithValue("@PassportNumber", passportNumber);
+                command.Parameters.AddWithValue("@Address", address);
+
+                command.ExecuteNonQuery();
+
+            }
+        }
     }
 }
