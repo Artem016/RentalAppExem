@@ -7,29 +7,39 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <StackPanel>
-            <DataGrid x:Name="ClientsGrid" AutoGenerateColumns="true"/>
-            <DataGrid x:Name="DeviceTypesGrid" AutoGenerateColumns="true"/>
-            <DataGrid x:Name="DevicePassportsGrid" AutoGenerateColumns="true"/>
-            <DataGrid x:Name="RentalAgreementGrid" AutoGenerateColumns="true"/>
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel>
+                    <DataGrid x:Name="ClientsGrid" AutoGenerateColumns="true"/>
+                    <DataGrid x:Name="DeviceTypesGrid" AutoGenerateColumns="true"/>
+                    <DataGrid x:Name="DevicePassportsGrid" AutoGenerateColumns="true"/>
+                    <DataGrid x:Name="RentalAgreementGrid" AutoGenerateColumns="true"/>
+                </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,10,0,0">
-            <StackPanel Orientation="Horizontal" Margin="0,5">
-                <TextBox x:Name="LastNameBox" Width="100" Margin="5"/>
-                <TextBox x:Name="FirstNameBox" Width="100" Margin="5"/>
-                <TextBox x:Name="MiddleNameBox" Width="100" Margin="5"/>
+                <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                    <TextBox x:Name="LastNameBox" Margin="5"/>
+                    <TextBox x:Name="FirstNameBox" Margin="5"/>
+                    <TextBox x:Name="MiddleNameBox" Margin="5"/>
+                    <TextBox x:Name="PassportSeriesBox" Margin="5"/>
+                    <TextBox x:Name="PassportNumberBox" Margin="5"/>
+                    <TextBox x:Name="AddressBox" Margin="5"/>
+                    <Button Content="Добавить клиента" Margin="5" Click="AddClient_Click"/>
+                </StackPanel>
+
+                <StackPanel Margin="10" Orientation="Vertical" VerticalAlignment="Top">
+
+                    <TextBox x:Name="AgreementNumberBox" Margin="0 5"/>
+                    <DatePicker x:Name="AgreementDatePicker" Margin="0 5"/>
+                    <DatePicker x:Name="RentStartDatePicker" Margin="0 5"/>
+                    <DatePicker x:Name="RentEndDatePicker" Margin="0 5"/>
+
+                    <TextBox x:Name="ClientIdBox" Margin="0 5"/>
+                    <TextBox x:Name="DeviceIdBox" Margin="0 5"/>
+
+                    <Button Content="Сохранить договор" Click="AddAgreement_Click" Margin="0 10"/>
+                    <TextBlock x:Name="AgreementResultText" Foreground="Green" FontWeight="Bold"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5">
-                <TextBox x:Name="PassportSeriesBox" Width="80" Margin="5"/>
-                <TextBox x:Name="PassportNumberBox" Width="100" Margin="5"/>
-                <TextBox x:Name="AddressBox" Width="200" Margin="5"/>
-            </StackPanel>
-            <Button Content="Добавить клиента" Width="150" Margin="5" Click="AddClient_Click"/>
-        </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace RentalApp
@@ -84,6 +85,28 @@ namespace RentalApp
                 command.Parameters.AddWithValue("@Address", address);
 
                 command.ExecuteNonQuery();
+
+            }
+        }
+
+        public bool AddAgreement(string number, DateTime agreementDate, DateTime startDate, DateTime endDate, int clientId, int deviceId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(
+                    "insert into RentalAgreements(AgreementNumber, AgreementDate, RentStartDate, RentEndDate, ClientId, DevicePassportId) " +
+                    "values (@Number, @AgreementDate, @StartDate, @EndDate, @ClientId, @DeviceId)", connection);
+
+                command.Parameters.AddWithValue("@Number", number);
+                command.Parameters.AddWithValue("@AgreementDate", agreementDate);
+                command.Parameters.AddWithValue("@StartDate", startDate);
+                command.Parameters.AddWithValue("@EndDate", endDate);
+                command.Parameters.AddWithValue("@ClientId", clientId);
+                command.Parameters.AddWithValue("@DeviceId", deviceId);
+
+                connection.Open();
+                int result = command.ExecuteNonQuery();
+                return result > 0;
 
             }
         }
