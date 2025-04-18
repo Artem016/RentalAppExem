@@ -68,6 +68,35 @@ namespace RentalApp
             return table;
         }
 
+        public DataTable GetOverdueClients()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = @"
+                        SELECT 
+                Clients.FirstName,
+				Clients.LastName,
+				Clients.MiddleName,
+                Clients.Address,
+                DeviceTypes.Name,
+                DevicePassport.Name,
+                RentalAgreements.RentEndDate
+            FROM RentalAgreements
+            JOIN Clients ON RentalAgreements.ClientId = Clients.Id
+            JOIN DevicePassport ON RentalAgreements.DevicePassportId = DevicePassport.Id
+            JOIN DeviceTypes ON DevicePassport.DeviceTypeId = DeviceTypes.Id
+            WHERE RentalAgreements.RentEndDate < CAST(GETDATE() AS DATE)
+        ";
+
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                return table;
+            }
+        }
+
         public void AddClint(string lastName, string firstName, string middleName, string passportSeries, string passportNumber, string address)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -110,5 +139,7 @@ namespace RentalApp
 
             }
         }
+
+
     }
 }

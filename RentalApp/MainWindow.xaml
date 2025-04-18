@@ -14,6 +14,7 @@
                     <DataGrid x:Name="DeviceTypesGrid" AutoGenerateColumns="true"/>
                     <DataGrid x:Name="DevicePassportsGrid" AutoGenerateColumns="true"/>
                     <DataGrid x:Name="RentalAgreementGrid" AutoGenerateColumns="true"/>
+                    <DataGrid x:Name="OverDueClientsGrid" AutoGenerateColumns="true"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="0,10,0,0">

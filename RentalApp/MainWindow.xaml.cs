@@ -31,6 +31,7 @@ namespace RentalApp
             DeviceTypesGrid.ItemsSource = db.GetDeviceTypes().DefaultView;
             DevicePassportsGrid.ItemsSource = db.GetDevicePassports().DefaultView;
             RentalAgreementGrid.ItemsSource = db.GetAgreements().DefaultView;
+            OverDueClientsGrid.ItemsSource = db.GetOverdueClients().DefaultView;
         }
 
         private void AddClient_Click(object sender, RoutedEventArgs e)
