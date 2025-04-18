@@ -22,6 +22,51 @@ namespace RentalApp
             return table;
         }
 
+        public DataTable GetDeviceTypes()
+        {
+            DataTable table = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("select * from DeviceTypes", connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                adapter.Fill(table);
+            }
+
+            return table;
+        }
+
+        public DataTable GetDevicePassports()
+        {
+            DataTable table = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("select * from DevicePassport", connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                adapter.Fill(table);
+            }
+
+            return table;
+        }
+
+        public DataTable GetAgreements()
+        {
+            DataTable table = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand("select * from RentalAgreements", connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                adapter.Fill(table);
+            }
+
+            return table;
+        }
+
         public void AddClint(string lastName, string firstName, string middleName, string passportSeries, string passportNumber, string address)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

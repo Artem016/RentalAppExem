@@ -26,6 +26,9 @@ namespace RentalApp
 
             DbContext db = new DbContext();
             ClientsGrid.ItemsSource = db.GetClints().DefaultView;
+            DeviceTypesGrid.ItemsSource = db.GetDeviceTypes().DefaultView;
+            DevicePassportsGrid.ItemsSource = db.GetDevicePassports().DefaultView;
+            RentalAgreementGrid.ItemsSource = db.GetAgreements().DefaultView;
         }
 
         private void AddClient_Click(object sender, RoutedEventArgs e)
