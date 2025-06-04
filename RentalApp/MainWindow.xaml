@@ -10,7 +10,9 @@
         <ScrollViewer>
             <StackPanel>
                 <StackPanel>
-                    <DataGrid x:Name="ClientsGrid" AutoGenerateColumns="true"/>
+                    <DataGrid x:Name="ClientsGrid" AutoGenerateColumns="True" CanUserAddRows="False" IsReadOnly="False"/>
+                    <Button Content="Сохранить изменения" Click="SaveClientChanges_Click"/>
+                    <Button Content="Удалить клиента" Click="DeleteClient_Click" Margin="0,0,0,10"/>
                     <DataGrid x:Name="DeviceTypesGrid" AutoGenerateColumns="true"/>
                     <DataGrid x:Name="DevicePassportsGrid" AutoGenerateColumns="true"/>
                     <DataGrid x:Name="RentalAgreementGrid" AutoGenerateColumns="true"/>

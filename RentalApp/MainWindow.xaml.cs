@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +23,15 @@ namespace RentalApp
     public partial class MainWindow : Window
     {
         private DbContext db;
+        private DataTable _clientsTable;
 
         public MainWindow()
         {
             InitializeComponent();
 
             db = new DbContext();
-            ClientsGrid.ItemsSource = db.GetClints().DefaultView;
+            _clientsTable = db.GetClints();
+            ClientsGrid.ItemsSource = _clientsTable.DefaultView;
             DeviceTypesGrid.ItemsSource = db.GetDeviceTypes().DefaultView;
             DevicePassportsGrid.ItemsSource = db.GetDevicePassports().DefaultView;
             RentalAgreementGrid.ItemsSource = db.GetAgreements().DefaultView;
@@ -61,6 +65,45 @@ namespace RentalApp
             PassportSeriesBox.Clear();
             PassportNumberBox.Clear();
             AddressBox.Clear();
+        }
+
+        private void SaveClientChanges_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (DataRow row in _clientsTable.Rows)
+            {
+                if (row.RowState == DataRowState.Modified)
+                {
+                    db.UpdateClient(row);
+                }
+            }
+
+            MessageBox.Show("Изменения сохранены!");
+            _clientsTable.AcceptChanges();
+        }
+
+        private void DeleteClient_Click(object sender, RoutedEventArgs e)
+        {
+            if (ClientsGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите клиента для удаления.");
+                return;
+            }
+
+            DataRowView selectedRow = (DataRowView)ClientsGrid.SelectedItem;
+            int clientId = Convert.ToInt32(selectedRow["Id"]);
+
+            MessageBoxResult result = MessageBox.Show(
+                $"Удалить клиента с ID {clientId}?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                db.DeleteClient(clientId);
+
+                // Удаление из DataTable (визуально)
+                selectedRow.Row.Delete();
+
+                MessageBox.Show("Клиент удалён.");
+            }
         }
 
         private void AddAgreement_Click(object sender, RoutedEventArgs e)

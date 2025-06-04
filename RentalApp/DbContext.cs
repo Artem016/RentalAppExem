@@ -118,6 +118,43 @@ namespace RentalApp
             }
         }
 
+        public void UpdateClient(DataRow row)
+        {
+            string query = "UPDATE Clients SET LastName = @LastName, FirstName = @FirstName, MiddleName = @MiddleName WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LastName", row["LastName"]);
+                    command.Parameters.AddWithValue("@FirstName", row["FirstName"]);
+                    command.Parameters.AddWithValue("@MiddleName", row["MiddleName"]);
+                    command.Parameters.AddWithValue("@Id", row["Id"]);
+
+                    command.ExecuteNonQuery();
+                }
+
+            }
+        }        
+        
+        public void DeleteClient(int clientId)
+        {
+            string query = "delete from Clients where Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Id", clientId);
+
+                    command.ExecuteNonQuery();
+                }
+
+            }
+        } 
+
         public bool AddAgreement(string number, DateTime agreementDate, DateTime startDate, DateTime endDate, int clientId, int deviceId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
